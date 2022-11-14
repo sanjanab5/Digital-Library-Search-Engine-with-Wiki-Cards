@@ -7,6 +7,9 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Elastic\Elasticsearch;
+use Elastic\Elasticsearch\ClientBuilder;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +22,17 @@ use App\Models\User;
 |
 */
 
+// Route::get('/', function () {   
+//     require '/Users/sanjanabolla/example-app/vendor/autoload.php';
+//     $client = ClientBuilder::create()->build();
+//     var_dump($client);
+// });
+
 Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/home','App\Http\Controllers\MainController@home');
+Route::get('/home','App\Http\Controllers\MainController@home')->name('home');
 Route::get('/login','App\Http\Controllers\MainController@login');
 Route::post('/login_auth','App\Http\Controllers\MainController@login_auth');
 Route::get('/logout','App\Http\Controllers\MainController@logout')->name('logout');
@@ -45,8 +54,17 @@ Route::get('/email', function()
     return view('email');
 });
 
+Route::get('/twofactor', function()
+{
+    return view('twofactor');
+});
+
 Route::get('/updateinfo','App\Http\Controllers\MainController@edit_profile')->name('edit_profile');
 Route::put('/updateinfo','App\Http\Controllers\MainController@update_profile')->name('update_profile');
+
+Route::get('/uploadetd','App\Http\Controllers\MainController@uploadetd')->name('upload_etd');
+Route::post('/uploadetd_success','App\Http\Controllers\MainController@uploadetd_success')->name('uploadetd_success');
+
 
 Route::get('/change_password','App\Http\Controllers\MainController@change_password')->name('change_password');
 Route::post('/update_password','App\Http\Controllers\MainController@update_password')->name('update_password');
@@ -71,3 +89,18 @@ Route::group([
 Route::get('/verify/resend', 'App\Http\Controllers\TwoFactorController@resend')->name('verify.resend');
 Route::resource('/verify', 'App\Http\Controllers\TwoFactorController')->only(['index', 'store']);
 
+Route::get('/searching', 'App\Http\Controllers\ElasticsearchController@es')->name('search');
+//Route::get('/counting', 'App\Http\Controllers\ElasticsearchController@counter')->name('counter');
+
+Route::get('/search_login', 'App\Http\Controllers\ElasticsearchController@es')->name('lsearch');
+
+Route::get('/search', function () {
+    return view('search');
+});
+
+Route::get('/dissertation_view/{id}', 'App\Http\Controllers\ElasticsearchController@dissertation_details')->name('paper');
+Route::get('/pdf_view/{pdfid}', 'App\Http\Controllers\ElasticsearchController@pdf');
+
+// Route::get('/dissertation_view', function () {
+//     return view('dissertation');
+// });

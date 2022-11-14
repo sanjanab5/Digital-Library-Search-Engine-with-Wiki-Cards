@@ -50,6 +50,32 @@
       font-size: 30px;
     }
 
+    form {
+    width: 400px;
+    margin: auto;
+    }
+
+    input {
+    padding: 4px 10px;
+    border: 0;
+    font-size: 16px;
+    }
+
+    .search {
+    width: 75%;
+    }
+
+    input[type=submit]:hover {
+        background-color: #3498DB;
+        }
+
+    input[type=submit] {
+        width: 70px;
+        background-color: #1c87c9;
+        color: #ffffff;
+        
+        }
+
 </style>
 </head>
 <body>
@@ -58,9 +84,14 @@
       <a href="{{ url('/login') }}">Login</a>
       <a href="{{ url('/register') }}">Register</a>
   </div>
-  
+  <br/><br/>
   <h3 align="center">Digital Library Search Engine</h3><br />
-  
+  <br/><br/>
+  <form action = "{{ route('search') }}" method = "GET">
+        @csrf
+      <input type="text" name="search" class="search" placeholder="Search here!">
+      <input type="submit" name="submit" class="submit" value="Search">
+  </form>
 <br/>
 </div>
 </body>

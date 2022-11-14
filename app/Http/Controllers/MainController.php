@@ -45,7 +45,7 @@ class MainController extends Controller
 
         if(Auth::attempt($user_data))
         {
-            return redirect('/verify/resend');
+            return redirect('/twofactor');
         }
         else
         {
@@ -122,6 +122,16 @@ class MainController extends Controller
         $user->notify(new TwoFactorCode());
     }
 
+    // function dissertation_details()
+    // {
+    //     return view('dissertation');
+    // }
+    
+    function uploadetd()
+    {
+        return view('upload_etd');
+    }
+    
 
 }
  

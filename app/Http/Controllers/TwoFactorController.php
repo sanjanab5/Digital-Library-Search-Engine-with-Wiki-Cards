@@ -38,6 +38,6 @@ class TwoFactorController extends Controller
         $user->generateTwoFactorCode();
         $user->notify(new TwoFactorCode());
 
-        return redirect()->back()->withMessage('The two factor code has been sent again');
+        return redirect()->back()->withMessage('The two factor code has been sent');
     }
 }

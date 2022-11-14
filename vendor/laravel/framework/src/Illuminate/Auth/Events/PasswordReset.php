@@ -3,7 +3,6 @@
 namespace Illuminate\Auth\Events;
 
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
 
 class PasswordReset
 {

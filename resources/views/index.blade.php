@@ -92,7 +92,10 @@
       <a href="{{ url('/logout') }}">Logout</a>
       <a href="{{ route('change_password') }}">Update Password</a>
       <a href="{{ route('edit_profile') }}">Update Info</a>
+      <a href="{{ route('upload_etd') }}">Upload New ETD</a>
       <a href="{{ url('/profile') }}">My Profile</a>
+      <a href="{{ url('/index') }}">Home</a>
+
       
   </div>
   
@@ -114,20 +117,19 @@
    @endif
    <br/>
    
-    <form> 
-      <input type="text" name="text" class="search" placeholder="Search here!">
+   <form action = "{{ route('lsearch') }}" method = "GET">
+        @csrf
+      <input type="text" name="search" class="search" placeholder="Search here!">
       <input type="submit" name="submit" class="submit" value="Search">
     </form>
     <br/><br/>
       
      @if ($message = Session::get('success'))
         <div class="alert alert-success" role="alert">
-            <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>{{ $message }}</strong>
         </div>
       @endif
     
-
    <br />
   </div>
  </body>
