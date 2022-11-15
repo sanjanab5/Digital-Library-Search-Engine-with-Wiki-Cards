@@ -43,7 +43,7 @@ Route::post('/register','App\Http\Controllers\RegisterController@register')->nam
 Route::get('/index', function()
 {
     return view('index');
-});
+})->name('go');
 
 Route::get('/profile', function()
 {
@@ -63,7 +63,7 @@ Route::get('/updateinfo','App\Http\Controllers\MainController@edit_profile')->na
 Route::put('/updateinfo','App\Http\Controllers\MainController@update_profile')->name('update_profile');
 
 Route::get('/uploadetd','App\Http\Controllers\MainController@uploadetd')->name('upload_etd');
-Route::post('/uploadetd_success','App\Http\Controllers\MainController@uploadetd_success')->name('uploadetd_success');
+Route::post('/uploadetd_success','App\Http\Controllers\ElasticsearchController@uploadetd_success')->name('uploadetd_success');
 
 
 Route::get('/change_password','App\Http\Controllers\MainController@change_password')->name('change_password');
@@ -90,7 +90,6 @@ Route::get('/verify/resend', 'App\Http\Controllers\TwoFactorController@resend')-
 Route::resource('/verify', 'App\Http\Controllers\TwoFactorController')->only(['index', 'store']);
 
 Route::get('/searching', 'App\Http\Controllers\ElasticsearchController@es')->name('search');
-//Route::get('/counting', 'App\Http\Controllers\ElasticsearchController@counter')->name('counter');
 
 Route::get('/search_login', 'App\Http\Controllers\ElasticsearchController@es')->name('lsearch');
 

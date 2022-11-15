@@ -19,7 +19,14 @@ class ElasticsearchController extends Controller
         $search = $request->input('search');
         $search = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9 ]/', ' ', urldecode(html_entity_decode(strip_tags($search))))));
         if($search == '' || Str::length($search) == 0) {
-            return redirect('/home');
+            if (Auth::check()) 
+        {
+            return view('index');
+        }
+        else
+        {
+            return view('home');
+        } 
         }
         $params = [
             'index' => 'webproject',
@@ -32,19 +39,9 @@ class ElasticsearchController extends Controller
                         'query' => $search,
                         'fields' => ['title','$year','abstract','wiki_terms','university','author','degree','program','advisor','$etd_file_id','pdf'],
                     ],
-                    ],
-                    'highlight' => [
-                        "pre_tags" => ["<b>"],
-                        "post_tags" => ["</b>"],
-                        "fields" => [
-                            "title" => new \stdClass(),
-                            "abstract" => new \stdClass(),
-                            "wiki_terms" => new \stdClass(),
-                        ],
-                        'require_field_match' => false
-                    ],
-                ]
-            ];
+                ],
+            ]
+        ];
         $results = $client->search($params);
         $count = $results['hits']['total']['value'];
         $response = $results['hits']['hits'];
@@ -57,32 +54,9 @@ class ElasticsearchController extends Controller
         else
         {
             return view('search');
-        }        
-     
-        // ,compact('response','count'));
-    
+        }            
     }
-    // public function callTest($sentStr){
-    //     dd("IMcalledd??????", $sentStr);  
-    // }
-
-    // public function counter(Request $request)
-    // {
-    //         $client = ClientBuilder::create()->build();
     
-    //         $params = [
-    //             'index' => 'webproject',
-    //             'body'  => [
-    //                 'query' => [
-    //                     'match_all' => new \stdClass()
-    //                 ]
-    //             ]
-    //         ];
-    //         $results = $client->search($params);
-    //         $count = $results['hits']['total']['value'];
-    //         $response = $results['hits']['hits'];
-    //         return view('search' ,compact('response','count'));
-    // }
     public function dissertation_details($id)
     {
         $client = ClientBuilder::create()->build();
@@ -96,19 +70,9 @@ class ElasticsearchController extends Controller
                         'query' => $id,
                         'fields' => ['title','$year','abstract','wiki_terms','university','author','degree','program','advisor','$etd_file_id','pdf'],
                     ],
-                    ],
-                    'highlight' => [
-                        "pre_tags" => ["<mark>"],
-                        "post_tags" => ["</mark>"],
-                        "fields" => [
-                            "title" => new \stdClass(),
-                            "abstract" => new \stdClass(),
-                            "wiki_terms" => new \stdClass(),
-                        ],
-                        'require_field_match' => false
-                    ],
-                ]
-            ];
+                ],
+            ]
+        ];
         // echo "Success";
 
         if (Auth::check()) 
@@ -134,12 +98,9 @@ class ElasticsearchController extends Controller
         header('Accept-Ranges: bytes');
         @readfile($file);
 
-        // header("content-disposition: attachment; filename=" .urlencode($filename));
-        // $f = fopen($file,"r");
-        // while(!feof($f))
-        // {
-        //     echo fread($f, 8192); 
-        //}
-
+    }
+    public function uploadetd_success()
+    {   
+        return view('upload_etd')->with('success','Details are indexed');
     }
 }   

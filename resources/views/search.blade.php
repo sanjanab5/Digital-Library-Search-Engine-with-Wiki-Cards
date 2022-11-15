@@ -13,9 +13,8 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 
        $srch = trim(preg_replace('/ +/', ' ', preg_replace('/[^A-Za-z0-9 ]/', ' ', urldecode(html_entity_decode(strip_tags($srch))))));
 
-        //$srch = strip_tags(htmlspecialchars_decode($srch));
         if($srch == '' || Str::length($srch) == 0) {
-            return redirect()->route('home');
+          return Redirect::back();
         }
         $params = [
             'index' => 'webproject',
@@ -26,19 +25,9 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
                 'query' => [
                     'multi_match' => [
                         'query' => $srch,
-                        'fields' => ['title','$year','abstract','wiki_terms','university','author','degree','program','advisor','$etd_file_id','pdf'],
+                        'fields' => ['title','$year','abstract','university','author','degree','program','advisor'],
                     ],
-                    ],
-                    'highlight' => [
-                        "pre_tags" => ["<mark>"],
-                        "post_tags" => ["</mark>"],
-                        "fields" => [
-                            "title" => new \stdClass(),
-                            "abstract" => new \stdClass(),
-                            "wiki_terms" => new \stdClass(),
-                        ],
-                        'require_field_match' => false
-                    ],
+                  ],
                 ]
             ];
         $results = $client->search($params);
@@ -78,7 +67,7 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
   $(document).ready(function(){
     var options={
       valueNames:['title','$year','abstract','university','author','$etd_file_id'],
-      page:75,
+      page:50,
       pagination: true
     }
     var listObj = new List('listId',options);
@@ -94,13 +83,11 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
         min-height: 100%;
     }
   
-   /* Add a black background color to the top navigation */
     .topnav {
     background-color: #333;
     overflow: hidden;
     }
 
-    /* Style the links inside the navigation bar */
     .topnav a {
     float: right;
     color: #f2f2f2;
@@ -110,13 +97,11 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
     font-size: 17px;
     }
 
-    /* Change the color of links on hover */
     .topnav a:hover {
     background-color: #ddd;
     color: black;
     }
 
-    /* Add a color to the active/current link */
     .topnav a.active {
     background-color: #04AA6D;
     color: white;
@@ -182,9 +167,7 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 
 if ($count == 0)
 {
-  //echo'<div style="text-align:center;" class="alert alert-danger success-block">';
-  //echo '<p class="head">No Results Found</p>';
-  echo 'No results';
+  echo "<p align='center'><b>No results found</b></p>";
 }
 
 else
@@ -201,25 +184,10 @@ else
         $program= !empty($srch)?highlightWords($r['_source']['program'],$srch):$r['_source']['program'];
         $university= !empty($srch)?highlightWords($r['_source']['university'],$srch):$r['_source']['university'];
         $abstract = (isset($r['_source']['abstract']) ? highlightWords($r['_source']['abstract'],$srch) : ""); 
-        $wiki_terms= !empty($srch)?highlightWords($r['_source']['wiki_terms'],$srch):$r['_source']['wiki_terms'];
+        //$wiki_terms= !empty($srch)?highlightWords($r['_source']['wiki_terms'],$srch):$r['_source']['wiki_terms'];
         $year= !empty($srch)?highlightWords($r['_source']['year'],$srch):$r['_source']['year'];
         $etd_file_id= !empty($srch)?highlightWords($r['_source']['etd_file_id'],$srch):$r['_source']['etd_file_id'];
         $pdf= !empty($srch)?highlightWords($r['_source']['pdf'],$srch):$r['_source']['pdf'];
-
-        // //$title= (isset($r['_source']['title'])? $r['_source']['title'] : "");
-        // //$author = (isset($r['_source']['author']) ? $r['_source']['author'] : "");
-        // $advisor= (isset($r['_source']['advisor']) ? highlightWords($r['_source']['advisor'],$srch) : "");
-        // //$degree= (isset($r['_source']['degree']) ? $r['_source']['degree'] : "");
-        // //$program= (isset($r['_source']['program']) ? $r['_source']['program'] : "");
-        // //$university= (isset($r['_source']['university']) ? $r['_source']['university'] : "");
-        // $abstract = (isset($r['_source']['abstract']) ? highlightWords($r['_source']['abstract'],$srch) : ""); 
-        // //$wiki_terms = (isset($r['_source']['wiki_terms']) ? $r['_source']['wiki_terms'] : ""); 
-        // //$year= (isset($r['_source']['year'])? $r['_source']['year'] : "");
-        // //$etd_file_id = (isset($r['_source']['etd_file_id'])? $r['_source']['etd_file_id'] : "");
-        // //$pdf = (isset($r['_source']['pdf']) ? $r['_source']['pdf'] : ""); 
-
-
-
 
         // function highlightWords($title, $srch){
         // $title = preg_replace('#'. preg_quote($srch) .'#i', '<span class="hlw">\\0</span>', $title);
@@ -244,8 +212,6 @@ else
         }
         echo "<div><p style='color:black;'><b>Abstract:</b> $brief_abstract</p></div>";
         echo "<div><p style='color:black;'><b>PDF:</b> $pdf</p></div>";
-
-
   
     }
 
@@ -253,11 +219,8 @@ else
 
 ?>
 </ul>
-
 <ul class="pagination"></ul>
 
 </div>
-
 </body>
-
 </html>

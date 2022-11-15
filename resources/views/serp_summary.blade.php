@@ -53,13 +53,11 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
             min-height: 100%;
     }
   
-   /* Add a black background color to the top navigation */
     .topnav {
     background-color: #333;
     overflow: hidden;
     }
 
-    /* Style the links inside the navigation bar */
     .topnav a {
     float: right;
     color: #f2f2f2;
@@ -69,13 +67,11 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
     font-size: 17px;
     }
 
-    /* Change the color of links on hover */
     .topnav a:hover {
     background-color: #ddd;
     color: black;
     }
 
-    /* Add a color to the active/current link */
     .topnav a.active {
     background-color: #04AA6D;
     color: white;
@@ -133,15 +129,8 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 
 
 <?php
-// if ($count == 0)
-// {
-//   //echo'<div style="text-align:center;" class="alert alert-danger success-block">';
-//   //echo '<p class="head">No Results Found</p>';
-//   echo 'No results';
-// }
 
-  echo "<br>";
-  //echo "<p><b>$count results found for $search</b></p>";
+echo "<br>";
 
 foreach( $response as $r)
     {

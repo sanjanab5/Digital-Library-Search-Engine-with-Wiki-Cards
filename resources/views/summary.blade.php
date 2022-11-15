@@ -53,13 +53,11 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
             min-height: 100%;
     }
   
-   /* Add a black background color to the top navigation */
     .topnav {
     background-color: #333;
     overflow: hidden;
     }
 
-    /* Style the links inside the navigation bar */
     .topnav a {
     float: right;
     color: #f2f2f2;
@@ -69,13 +67,11 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
     font-size: 17px;
     }
 
-    /* Change the color of links on hover */
     .topnav a:hover {
     background-color: #ddd;
     color: black;
     }
 
-    /* Add a color to the active/current link */
     .topnav a.active {
     background-color: #04AA6D;
     color: white;
@@ -127,15 +123,8 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 
 
 <?php
-// if ($count == 0)
-// {
-//   //echo'<div style="text-align:center;" class="alert alert-danger success-block">';
-//   //echo '<p class="head">No Results Found</p>';
-//   echo 'No results';
-// }
 
   echo "<br>";
-  //echo "<p><b>$count results found for $search</b></p>";
 
 foreach( $response as $r)
     {
@@ -161,49 +150,19 @@ foreach( $response as $r)
         echo "<p style='color:black;'><b>Year issued:</b> $year</p>";
         echo "<p style='color:black;'><b>Abstract:</b> $abstract</p>";
         echo "<div><p style='color:black;'><b>PDF:</b> $pdf</p></div>";
-
-    
-        //$handle = fopen("Applications/XAMPP/xamppfiles/htdocs/PDF/$pdf", "r");
-
         echo "URL: <a href='/pdf_view/".$pdf."' target='_blank' rel='noopener noreferrer'>Click Here!</a>";
 
         // echo "URL: <a href='$handle'>Click here to open the pdf</a>";
 
-        // $filePath="Applications/XAMPP/xamppfiles/htdocs/PDF";
-        // $filename=$pdf;
-        // header('Content-type:application/pdf');
-        // header('Content-disposition: inline; filename="'.$filename.'"');
-        // header('content-Transfer-Encoding:binary');
-        // header('Accept-Ranges:bytes');
-        // echo file_get_contents($filePath);
-
-        // $filename = "Applications/XAMPP/xamppfiles/htdocs/PDF/$pdf";
-  
-        // // Header content type
-        // header("Content-type: application/pdf");
-        
-        // header("Content-Length: " . filesize($filename));
-        
-        // // Send the file to the browser.
-        // readfile($filename);
-
-
         // $file = 'Applications/XAMPP/xamppfiles/htdocs/PDF';
         // $filename = $pdf;
-          
-        // // Header content type
+    
         // header('Content-type: application/pdf');
-          
         // header('Content-Disposition: inline; filename="' . $filename . '"');
-          
         // header('Content-Transfer-Encoding: binary');
-          
         // header('Accept-Ranges: bytes');
-          
-        // // Read the file
         // @readfile($file);
 
-       // $handle = fopen("Applications/XAMPP/xamppfiles/htdocs/PDF/$pdf", "r");
 
     }
 ?>
