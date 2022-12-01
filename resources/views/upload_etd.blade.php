@@ -76,7 +76,7 @@ if (!empty($_POST)) {
                         'degree' => $degree,
                         'university' => $university,
                         'abstract' => $abstract,
-                        'etd_file_id' => rand(500,600),
+                        'etd_file_id' => rand(500,15000),
                         'pdf' => $pdfname
                         ],  
         ];
@@ -92,6 +92,8 @@ if (!empty($_POST)) {
 <html>
  <head>
   <title>Upload ETD</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
@@ -120,8 +122,8 @@ if (!empty($_POST)) {
     }
 
     .topnav a.active {
-     background-color: #04AA6D;
-    color: white;
+     background-color: #ddd;
+    color: black;
     }
 
     body {
@@ -194,11 +196,11 @@ if (!empty($_POST)) {
         </ul>
         </div>
     @endif
-  <br />
-  <div class="topnav">
+    <div class="topnav">
       <a href="{{ url('/logout') }}">Logout</a>
       <a href="{{ route('change_password') }}">Update Password</a>
       <a href="{{ route('edit_profile') }}">Update Info</a>
+      <a href="{{ route('upload_etd') }}" class="active">Upload New ETD</a>
       <a href="{{ url('/profile') }}">My Profile</a>
       <a href="{{ url('/index') }}">Home</a>
   </div>
@@ -258,5 +260,6 @@ if (!empty($_POST)) {
     
    <br/>
   </div>
+  @include('footer2')
  </body>
 </html>

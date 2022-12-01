@@ -21,7 +21,7 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
             'index' => 'webproject',
             'explain' => true,
             'from' =>0,
-            'size' => 500,
+            'size' => 800,
             'body'  => [
                 'query' => [
                     'multi_match' => [
@@ -44,7 +44,9 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 <!DOCTYPE html>
 <html>
  <head>
-  <title>Web Project</title>
+  <title>Digital Library</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
@@ -207,7 +209,7 @@ else
         echo "<p style='color:black;'><b>Author(s):</b> $author</p>";
         echo "<p style='color:black;'><b>University:</b> $university</p>";
         echo "<p style='color:black;'><b>Year:</b> $year</p>";
-        echo "<p style='color:black;'><b>file_id:</b> $etd_file_id</p>";
+        //echo "<p style='color:black;'><b>file_id:</b> $etd_file_id</p>";
 
         $brief_abstract = $abstract;    
         $maxPos = 400;           
@@ -217,7 +219,7 @@ else
             $brief_abstract = substr($brief_abstract, 0, strrpos($brief_abstract, ' ', $lastPos)) . '...';
         }
         echo "<div><p style='color:black;'><b>Abstract:</b> $brief_abstract</p></div>";
-        echo "<div><p style='color:black;'><b>PDF:</b> $pdf</p></div>";
+        //echo "<div><p style='color:black;'><b>PDF:</b> $pdf</p></div>";
     }
 }
 
@@ -226,5 +228,6 @@ else
 <ul class="pagination"></ul>
 
 </div>
+@include('footer2')
 </body>
 </html>

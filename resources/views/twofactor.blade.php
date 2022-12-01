@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Two factor verification</title>
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
@@ -82,5 +86,6 @@
         </div>
     </form>
     </div>
+    @include('footer2')
 </body>
 </html>

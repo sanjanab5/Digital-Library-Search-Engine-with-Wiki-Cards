@@ -1,5 +1,7 @@
 <html>
   <head>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
@@ -38,10 +40,41 @@
         cursor: pointer;
         float: right;
         }
+        .topnav {
+        background-color: #333;
+        overflow: hidden;
+        }
+
+        .topnav a {
+        float: right;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        }
+
+        .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+        }
+
+        .topnav a.active {
+        background-color: #ddd;
+        color: black;
+        }
 
     </style>
   </head>
   <body>
+  <div class="topnav">
+      <a href="{{ url('/logout') }}">Logout</a>
+      <a href="{{ route('change_password') }}" class="active">Update Password</a>
+      <a href="{{ route('edit_profile') }}">Update Info</a>
+      <a href="{{ route('upload_etd') }}">Upload New ETD</a>
+      <a href="{{ url('/profile') }}">My Profile</a>
+      <a href="{{ url('/index') }}">Home</a>
+  </div>
     <br/>
     <div class = "container">
     <form action = "{{ route('update_password') }}" method = "POST">
@@ -99,8 +132,8 @@
                 <input type="submit" name="submit" class="btn btn-primary" value="Submit" />
         </div>
         <br/><br/><br/>
-        <a href="{{ url('/index') }}">Go back to Homepage</a>
     </form>
     </div>
+    @include('footer2')
   </body>
 </html>

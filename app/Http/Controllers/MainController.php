@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Rules\ReCaptcha;
 use Mail;
 use Auth;
 use Hash;
@@ -35,24 +36,40 @@ class MainController extends Controller
     {
         $this->validate($request, [
         'email'   => 'required|email',
-        'password'  => 'required|alphaNum|min:5'
+        'password'  => 'required|alphaNum|min:5',
+        'g-recaptcha-response' => ['required',new ReCaptcha]
         ]);
+        
+            $user_data = array(
+            'email'  => $request->get('email'),
+            'password' => $request->get('password')
+            );
 
-        $user_data = array(
-        'email'  => $request->get('email'),
-        'password' => $request->get('password')
-        );
+            if(Auth::attempt($user_data))
+            {
+                return redirect('/twofactor');
+            }
+            else
+            {
+                return back()->with('error', 'Incorrect details');
+            }
+        
 
-        if(Auth::attempt($user_data))
-        {
-            return redirect('/twofactor');
-        }
-        else
-        {
-            return back()->with('error', 'Incorrect details');
-        }
 
     }
+
+
+    // function datacallback(Request $request)
+    // {
+    //     ('#hrecaptcha').val($request);
+    //     ('#hrecaptchaerror').html('');
+    // }
+
+    // function expiredcallback()
+    // {
+    //     ('#hrecaptcha').val('');
+    // }
+
     function logout()
     {
         Auth::logout();

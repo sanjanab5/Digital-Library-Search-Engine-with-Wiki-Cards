@@ -2,6 +2,8 @@
 
 use Elastic\Elasticsearch;
 use Elastic\Elasticsearch\ClientBuilder;
+use Illuminate\Support\Str;
+
 require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 
         $client = Elastic\Elasticsearch\ClientBuilder::create()->build();
@@ -20,11 +22,12 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
             'index' => 'webproject',
             'explain' => true,
             'from' =>0,
-            'size' => 500,
+            'size' => 800,
             'body'  => [
                 'query' => [
                     'multi_match' => [
                         'query' => $srch,
+                        'fuzziness' => 'AUTO',
                         'fields' => ['title','$year','abstract','university','author','degree','program','advisor'],
                     ],
                   ],
@@ -43,7 +46,10 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 <!DOCTYPE html>
 <html>
  <head>
-  <title>Web Project</title>
+  <title>Digital Library</title>
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
@@ -67,7 +73,7 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
   $(document).ready(function(){
     var options={
       valueNames:['title','$year','abstract','university','author','$etd_file_id'],
-      page:50,
+      page:75,
       pagination: true
     }
     var listObj = new List('listId',options);
@@ -144,10 +150,10 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 </style>
 </head>
 <body>
-  <br />
 <div class="topnav">
       <a href="{{ url('/login') }}">Login</a>
       <a href="{{ url('/register') }}">Register</a>
+      <a href="{{ url('/') }}">Home</a>
   </div>
   <br/><br/>
   <h3 align="center">Digital Library Search Engine</h3><br />
@@ -184,7 +190,7 @@ else
         $program= !empty($srch)?highlightWords($r['_source']['program'],$srch):$r['_source']['program'];
         $university= !empty($srch)?highlightWords($r['_source']['university'],$srch):$r['_source']['university'];
         $abstract = (isset($r['_source']['abstract']) ? highlightWords($r['_source']['abstract'],$srch) : ""); 
-        //$wiki_terms= !empty($srch)?highlightWords($r['_source']['wiki_terms'],$srch):$r['_source']['wiki_terms'];
+        $wiki_terms= (isset($r['_source']['wiki_terms'])? (!empty($srch)?highlightWords($r['_source']['wiki_terms'],$srch):$r['_source']['wiki_terms']): "");
         $year= !empty($srch)?highlightWords($r['_source']['year'],$srch):$r['_source']['year'];
         $etd_file_id= !empty($srch)?highlightWords($r['_source']['etd_file_id'],$srch):$r['_source']['etd_file_id'];
         $pdf= !empty($srch)?highlightWords($r['_source']['pdf'],$srch):$r['_source']['pdf'];
@@ -201,7 +207,7 @@ else
         echo "<p style='color:black;'><b>Author(s):</b> $author</p>";
         echo "<p style='color:black;'><b>University:</b> $university</p>";
         echo "<p style='color:black;'><b>Year:</b> $year</p>";
-        echo "<p style='color:black;'><b>file_id:</b> $etd_file_id</p>";
+        //echo "<p style='color:black;'><b>file_id:</b> $etd_file_id</p>";
 
         $brief_abstract = $abstract;    
         $maxPos = 400;           
@@ -211,7 +217,7 @@ else
             $brief_abstract = substr($brief_abstract, 0, strrpos($brief_abstract, ' ', $lastPos)) . '...';
         }
         echo "<div><p style='color:black;'><b>Abstract:</b> $brief_abstract</p></div>";
-        echo "<div><p style='color:black;'><b>PDF:</b> $pdf</p></div>";
+        //echo "<div><p style='color:black;'><b>PDF:</b> $pdf</p></div>";
   
     }
 
@@ -222,5 +228,6 @@ else
 <ul class="pagination"></ul>
 
 </div>
+@include('footer2')
 </body>
 </html>

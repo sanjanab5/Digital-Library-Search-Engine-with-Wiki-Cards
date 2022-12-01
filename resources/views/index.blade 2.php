@@ -2,8 +2,6 @@
 <html>
  <head>
   <title>Homepage</title>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
@@ -32,8 +30,8 @@
     }
 
     .topnav a.active {
-     background-color: #ddd;
-    color: black;
+     background-color: #04AA6D;
+    color: white;
     }
 
     body {
@@ -85,13 +83,14 @@
   </style>
  </head>
  <body>
+  <br />
   <div class="topnav">
       <a href="{{ url('/logout') }}">Logout</a>
       <a href="{{ route('change_password') }}">Update Password</a>
       <a href="{{ route('edit_profile') }}">Update Info</a>
       <a href="{{ route('upload_etd') }}">Upload New ETD</a>
       <a href="{{ url('/profile') }}">My Profile</a>
-      <a href="{{ url('/index') }}" class="active">Home</a>
+      <a href="{{ url('/index') }}">Home</a>
 
       
   </div>
@@ -125,6 +124,5 @@
     
    <br />
   </div>
-  @include('footer2')
  </body>
 </html>

@@ -27,7 +27,9 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 <!DOCTYPE html>
 <html>
  <head>
-  <title>Web Project</title>
+  <title>Digital Library</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
@@ -118,6 +120,7 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
   <div class="topnav">
       <a href="{{ url('/login') }}">Login</a>
       <a href="{{ url('/register') }}">Register</a>
+      <a href="{{ url('/') }}">Home</a>
   </div>
   <br/><br/>
 
@@ -166,6 +169,6 @@ foreach( $response as $r)
 
     }
 ?>
-
+ @include('footer2')
 </body>
 </html>

@@ -27,7 +27,10 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 <!DOCTYPE html>
 <html>
  <head>
-  <title>Web Project</title>
+  <title>Digital Library</title>
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
@@ -114,7 +117,6 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
   </style>
 </head>
 <body>
-  <br />
   <div class="topnav">
       <a href="{{ url('/logout') }}">Logout</a>
       <a href="{{ route('change_password') }}">Update Password</a>
@@ -122,8 +124,6 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
       <a href="{{ route('upload_etd') }}">Upload New ETD</a>
       <a href="{{ url('/profile') }}">My Profile</a>
       <a href="{{ url('/index') }}">Home</a>
-
-      
   </div>
   <br/><br/>
 
@@ -160,6 +160,6 @@ foreach( $response as $r)
 
     }
 ?>
-
+ @include('footer2')
 </body>
 </html>

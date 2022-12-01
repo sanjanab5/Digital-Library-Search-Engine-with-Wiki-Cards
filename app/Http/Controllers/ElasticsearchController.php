@@ -88,7 +88,7 @@ class ElasticsearchController extends Controller
     public function pdf($pdfid)
     {
         
-        $file = '/Applications/XAMPP/xamppfiles/htdocs/PDF'."/$pdfid";
+        $file = '/Users/sanjanabolla/Downloads/PDF'."/$pdfid";
        //$filename = $pdfid;
           
         header('Content-type: application/pdf');

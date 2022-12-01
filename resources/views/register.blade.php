@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <title>Register</title>
+
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 
@@ -54,10 +58,39 @@
             cursor: pointer;
             float: right;
             }
+            .topnav {
+            background-color: #333;
+            overflow: hidden;
+            }
+
+            .topnav a {
+            float: right;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+            }
+
+            .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+            }
+
+            .topnav a.active {
+            background-color: #ddd;
+            color: black;
+            }
 
         </style>
     </head>
     <body>
+    <div class="topnav">
+      <a href="{{ url('/login') }}">Login</a>
+      <a href="{{ url('/register') }}"  class="active">Register</a>
+      <a href="{{ url('/') }}">Home</a>
+
+  </div>
     <br/>
     <div class="container">
         <h3 align="center">Register here!</h3><br />
@@ -111,9 +144,8 @@
         <br/><br/><br/>
         <a href="{{ url('/login') }}">Already a user? Click here to login</a>
         <br/>
-        <a href="{{ url('/home') }}">Go back to Homepage</a>
-        <br/>
       </form>
     </div>
+    @include('footer2')
     </body>
 </html>
