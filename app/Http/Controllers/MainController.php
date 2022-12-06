@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Rules\ReCaptcha;
+use Elastic\Elasticsearch;
+use Elastic\Elasticsearch\ClientBuilder;
+use Elastica\Client as ElasticaClient;
+use Illuminate\Support\Str;
+use DB;
 use Mail;
 use Auth;
 use Hash;
@@ -25,12 +30,6 @@ class MainController extends Controller
     {
         return view('register');
     }    
-    /*
-    function forgotpassword()
-    {
-        return view('forgotpassword');
-    }
-    */
 
     function login_auth(Request $request)
     {
@@ -57,18 +56,95 @@ class MainController extends Controller
 
 
     }
+    public function get_key()
+    {
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
+            $user = Auth::user();            
+            if ($user->getRememberToken() == null) {
+                $token = Str::random(32);
+                $user->setRememberToken($token);
+                $user->save();
+            }
+            return response()->json(['Key' => $user->getRememberToken()], 200);
+        }
+        else{
+            return response()->json(['error'=>'Unauthorised'], 401);
+        }
+    }
 
+    public function api_search()
+    {
+        require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 
-    // function datacallback(Request $request)
-    // {
-    //     ('#hrecaptcha').val($request);
-    //     ('#hrecaptchaerror').html('');
-    // }
+        $client = ClientBuilder::create()->build();
 
-    // function expiredcallback()
-    // {
-    //     ('#hrecaptcha').val('');
-    // }
+        $search = request('query');
+        $number = request('range');
+        $key = request('key');
+
+        $keys_in_db = (array)DB::select('SELECT remember_token FROM users'); //chng
+        $keys_json = json_encode($keys_in_db); //chng
+        //echo strpos($keys_json, $key);
+        if($key!== null)
+        {
+            if(strpos($keys_json, $key) !== false) 
+            {
+                $params = [
+                    'index' => 'webproject2',
+                    'explain' => true,
+                    'from' => 0,
+                    'size' => 500,
+                    'body'  => [
+                        'query' => [
+                            'multi_match' => [
+                                'query' => $search,
+                                'fields' => ['title','abstract','university','author','degree','program','advisor'],
+                            ],
+                        ],
+                    ]
+                ];
+                $results = $client->search($params);
+                $count = $results['hits']['total']['value'];
+                $res = $results['hits']['hits'];
+                $rank=1;
+
+                    foreach($res as $r)
+                    {
+                        if($rank <= $number)
+                        {
+                            $output[$rank]['title'] = $results['hits']['hits'][$rank-1]['_source']['title'];
+                            $output[$rank]['abstract'] = $results['hits']['hits'][$rank-1]['_source']['abstract'];
+                            $output[$rank]['university'] = $results['hits']['hits'][$rank-1]['_source']['university'];
+                            $output[$rank]['author'] = $results['hits']['hits'][$rank-1]['_source']['author'];
+                            $output[$rank]['degree'] = $results['hits']['hits'][$rank-1]['_source']['degree'];
+                            $output[$rank]['program'] = $results['hits']['hits'][$rank-1]['_source']['program'];
+        
+                            $rank+=1;
+                        }
+                    } 
+                    $final_output = json_encode($output);
+
+                    if($final_output!= null)
+                    {
+                        return ($final_output);
+                    }
+                    else
+                    {
+                        return response()->json(['No results found'], 200);
+                    }
+            
+            }
+            else 
+            {
+                return response()->json(['error' => 'UnAuthorised Access'], 401);
+            }
+        }
+        else
+        {
+            echo "Unauthorized user";
+        }
+    }
+
 
     function logout()
     {
@@ -139,10 +215,6 @@ class MainController extends Controller
         $user->notify(new TwoFactorCode());
     }
 
-    // function dissertation_details()
-    // {
-    //     return view('dissertation');
-    // }
     
     function uploadetd()
     {

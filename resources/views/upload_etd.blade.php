@@ -19,7 +19,7 @@ if ( isset( $_FILES['pdf'] ) )
 	if ($_FILES['pdf']['type'] == "application/pdf") 
     {
 		$source_file = $_FILES['pdf']['tmp_name'];
-		$dest_file = "/Applications/XAMPP/xamppfiles/htdocs/PDF/".$_FILES['pdf']['name'];
+		$dest_file = "/Users/sanjanabolla/Downloads/PDF/".$_FILES['pdf']['name'];
 
 		if (file_exists($dest_file)) {
 			print "The file name already exists!!";
@@ -34,7 +34,7 @@ if ( isset( $_FILES['pdf'] ) )
                 <b><u>Details : </u></b><br/>
                 File Name : ".$_FILES['pdf']['name']."<br.>"."<br/>
                 File Size : ".$_FILES['pdf']['size']." bytes"."<br/>
-                File location : /Applications/XAMPP/xamppfiles/htdocs/PDF/".$_FILES['pdf']['name']."<br/>
+                File location : /Users/sanjanabolla/Downloads/PDF/".$_FILES['pdf']['name']."<br/>
                 </div>";
             }
 	    }
@@ -65,7 +65,7 @@ if (!empty($_POST)) {
         $abstract = $_POST['abstract'];
 
         $params = [
-            'index' => 'webproject',
+            'index' => 'webproject2',
             'type' => '_doc',
             'body'  => [
                         'title' => $title,
@@ -93,11 +93,7 @@ if (!empty($_POST)) {
  <head>
   <title>Upload ETD</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-  <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-
-  <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
   <style type="text/css">
@@ -243,7 +239,6 @@ if (!empty($_POST)) {
        </div><br/>
        <div class="form-group">
            <label>Abstract:</label><br>
-           <!-- <input type="text" name="abstract" ows="5" cols="52" class="form-control" /> -->
            <textarea name="abstract" rows="5" cols="52"></textarea>
        </div><br/>
        <div class="form-group">
@@ -260,6 +255,6 @@ if (!empty($_POST)) {
     
    <br/>
   </div>
-  @include('footer2')
+  @include('footer')
  </body>
 </html>

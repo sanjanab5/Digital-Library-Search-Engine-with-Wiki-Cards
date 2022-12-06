@@ -8,7 +8,7 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
 
         $client = Elastic\Elasticsearch\ClientBuilder::create()->build();
         $params = [
-            'index' => 'webproject',
+            'index' => 'webproject2',
             'body'  => [
                 'query' => [
                     "multi_match" => [
@@ -22,6 +22,16 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
         $results = $client->search($params);
         $count = $results['hits']['total']['value'];
         $response = $results['hits']['hits'];
+
+        function highlightWords($text,$word,$u) {
+            $highlighted = preg_filter('/' . preg_quote($word, '/') . '/i', '<div class="sample"><span style="background-color: #F9F902;">\\0</span> 
+            <span class="tooltipt"><a href='.$u.'>'.$u.'</a></span>
+            </div> ', $text);
+            if (!empty($highlighted)) {
+                $text = $highlighted;
+            }
+            return $text;
+        }
 ?>
 
 <!DOCTYPE html>
@@ -30,14 +40,9 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
   <title>Digital Library</title>
 
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-
-  <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
-
-  <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -113,6 +118,41 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
         color: #ffffff;
         
         }
+    .sample{
+    position: relative;
+    display: inline-block;
+    }
+
+    .sample .tooltipt {
+    visibility: hidden;
+    width: max-content;
+    background-color: #333;
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: .5rem;
+    position: absolute;
+    z-index: 1;
+    bottom: 95%;
+    left: 0px;
+    margin-left: -60px;
+    visibility: hidden;
+    }
+
+    .sample .tooltipt::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+    }
+
+    .sample:hover .tooltipt {
+    visibility: visible;
+    }
 
   </style>
 </head>
@@ -145,6 +185,24 @@ foreach( $response as $r)
         $year= (isset($r['_source']['year'])? $r['_source']['year'] : "");
         $pdf= (isset($r['_source']['pdf'])? $r['_source']['pdf'] : "");
 
+        $decoded_array = json_decode($wiki_terms, TRUE);
+        $terms_array = array();
+        $url_array = array();
+        if($decoded_array != NULL)
+        {
+            foreach($decoded_array as $da)
+            {
+                $terms_array[]= $da['term'];
+                $url_array[]=$da['url'];
+                
+            }
+            $count = count($terms_array);
+            for( $i = 0; $i < $count; $i++)
+            {
+                $abstract= highlightWords($abstract,$terms_array[$i],$url_array[$i]);  
+                
+            }
+        }
 
         echo "<p align='center'><b>Title: </b>$title</p>";
         echo "<p style='color:black;'><b>ETD ID:</b> $id</p>";
@@ -154,12 +212,13 @@ foreach( $response as $r)
         echo "<p style='color:black;'><b>Program:</b> $program</p>";
         echo "<p style='color:black;'><b>University:</b> $university</p>";
         echo "<p style='color:black;'><b>Year issued:</b> $year</p>";
-        echo "<p style='color:black;'><b>Abstract:</b> $abstract</p>";
+        echo "<b>Abstract: </b>".substr($abstract, 2, -2);
+        echo "<br>";
         echo "<div><p style='color:black;'><b>PDF:</b> $pdf</p></div>";
         echo "URL: <a href='/pdf_view/".$pdf."' target='_blank' rel='noopener noreferrer'>Click Here!</a>";
 
     }
 ?>
- @include('footer2')
+ @include('footer')
 </body>
 </html>

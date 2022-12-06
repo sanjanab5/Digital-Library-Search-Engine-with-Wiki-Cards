@@ -1,11 +1,7 @@
 <html>
 <head>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-
-    <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
     <style>
@@ -96,6 +92,6 @@
             </div>
         </form> 
     </div>
-    @include('footer2')
+    @include('footer')
     </body>
 </html>

@@ -29,7 +29,7 @@ class ElasticsearchController extends Controller
         } 
         }
         $params = [
-            'index' => 'webproject',
+            'index' => 'webproject2',
             'explain' => true,
             'from' => 0,
             'size' => 500,
@@ -61,7 +61,7 @@ class ElasticsearchController extends Controller
     {
         $client = ClientBuilder::create()->build();
         $params = [
-            'index' => 'webproject',
+            'index' => 'webproject2',
             'from' => 0,
             'size' => 500,
             'body'  => [
@@ -73,7 +73,6 @@ class ElasticsearchController extends Controller
                 ],
             ]
         ];
-        // echo "Success";
 
         if (Auth::check()) 
         {
@@ -89,12 +88,10 @@ class ElasticsearchController extends Controller
     {
         
         $file = '/Users/sanjanabolla/Downloads/PDF'."/$pdfid";
-       //$filename = $pdfid;
           
         header('Content-type: application/pdf');
         header('Content-Disposition: inline; filename="' . $file . '"');
         header('Content-Transfer-Encoding: binary');
-        //header('Content-Length: ' . filesize($file));
         header('Accept-Ranges: bytes');
         @readfile($file);
 

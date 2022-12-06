@@ -3,13 +3,8 @@
  <head>
   <title>Login</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-
-    <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <style type="text/css">
@@ -127,9 +122,6 @@
         
         <div class="form-group">
         <div class="g-recaptcha" data-sitekey="6Lc7jUAjAAAAADyDWGaKXmJY_gRRjIResjoALLHN"></div>
-        <!-- @if ($errors->has('g-recaptcha-response'))
-            <span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span>
-        @endif -->
         </div>
 
         <br/>
@@ -145,7 +137,7 @@
         <br/>
    </form>
   </div>
-  @include('footer2')
+  @include('footer')
 
  </body>
 </html>

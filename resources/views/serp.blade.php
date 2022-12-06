@@ -18,7 +18,7 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
           return Redirect::back();
         }
         $params = [
-            'index' => 'webproject',
+            'index' => 'webproject2',
             'explain' => true,
             'from' =>0,
             'size' => 800,
@@ -46,14 +46,8 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
  <head>
   <title>Digital Library</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-  <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-
-  <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
-
-  <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
 
@@ -192,15 +186,9 @@ else
         $program= !empty($srch)?highlightWords($r['_source']['program'],$srch):$r['_source']['program'];
         $university= !empty($srch)?highlightWords($r['_source']['university'],$srch):$r['_source']['university'];
         $abstract = (isset($r['_source']['abstract']) ? highlightWords($r['_source']['abstract'],$srch) : ""); 
-        //$wiki_terms= !empty($srch)?highlightWords($r['_source']['wiki_terms'],$srch):$r['_source']['wiki_terms'];
         $year= !empty($srch)?highlightWords($r['_source']['year'],$srch):$r['_source']['year'];
         $etd_file_id= !empty($srch)?highlightWords($r['_source']['etd_file_id'],$srch):$r['_source']['etd_file_id'];
         $pdf= !empty($srch)?highlightWords($r['_source']['pdf'],$srch):$r['_source']['pdf'];
-
-        // function highlightWords($title, $srch){
-        // $title = preg_replace('#'. preg_quote($srch) .'#i', '<span class="hlw">\\0</span>', $title);
-        // return $title;
-        // }
 
         echo "<br>";
         
@@ -209,7 +197,6 @@ else
         echo "<p style='color:black;'><b>Author(s):</b> $author</p>";
         echo "<p style='color:black;'><b>University:</b> $university</p>";
         echo "<p style='color:black;'><b>Year:</b> $year</p>";
-        //echo "<p style='color:black;'><b>file_id:</b> $etd_file_id</p>";
 
         $brief_abstract = $abstract;    
         $maxPos = 400;           
@@ -218,8 +205,7 @@ else
             $lastPos = ($maxPos - 3) - strlen($brief_abstract);
             $brief_abstract = substr($brief_abstract, 0, strrpos($brief_abstract, ' ', $lastPos)) . '...';
         }
-        echo "<div><p style='color:black;'><b>Abstract:</b> $brief_abstract</p></div>";
-        //echo "<div><p style='color:black;'><b>PDF:</b> $pdf</p></div>";
+        echo "<div><p style='color:black;'><b>Abstract:</b> ".substr($brief_abstract, 2, -2)."</p></div>";
     }
 }
 
@@ -228,6 +214,6 @@ else
 <ul class="pagination"></ul>
 
 </div>
-@include('footer2')
+@include('footer')
 </body>
 </html>

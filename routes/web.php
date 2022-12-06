@@ -100,6 +100,3 @@ Route::get('/search', function () {
 Route::get('/dissertation_view/{id}', 'App\Http\Controllers\ElasticsearchController@dissertation_details')->name('paper');
 Route::get('/pdf_view/{pdfid}', 'App\Http\Controllers\ElasticsearchController@pdf');
 
-// Route::get('/dissertation_view', function () {
-//     return view('dissertation');
-// });

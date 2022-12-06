@@ -3,11 +3,7 @@
  <head>
   <title>Homepage</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-  <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-
-  <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
   <style type="text/css">
@@ -103,7 +99,6 @@
     <br/></br></br>
      <p style="text-align:center; font-size: 25px">Hello {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}!</p>
      <br />
-     <!--<a href="{{ url('/logout') }}">Logout</a>-->
     </div>
    @else
     <script>window.location = "/index";</script>
@@ -125,6 +120,7 @@
     
    <br />
   </div>
-  @include('footer2')
+  <br/><br/><br/><br/><br/><br/>
+  @include('footer')
  </body>
 </html>

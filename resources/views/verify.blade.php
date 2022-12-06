@@ -14,6 +14,6 @@
                 <a href="http://localhost:8000/{{$token}}/reset-password">Click Here</a>.
             </div>
         </div>
-@include('footer2')
+@include('footer')
 </body>
 </html>
