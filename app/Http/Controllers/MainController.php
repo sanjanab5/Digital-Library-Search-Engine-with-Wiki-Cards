@@ -82,8 +82,8 @@ class MainController extends Controller
         $number = request('range');
         $key = request('key');
 
-        $keys_in_db = (array)DB::select('SELECT remember_token FROM users'); //chng
-        $keys_json = json_encode($keys_in_db); //chng
+        $keys_in_db = (array)DB::select('SELECT remember_token FROM users'); 
+        $keys_json = json_encode($keys_in_db); 
         //echo strpos($keys_json, $key);
         if($key!== null)
         {
@@ -106,20 +106,20 @@ class MainController extends Controller
                 $results = $client->search($params);
                 $count = $results['hits']['total']['value'];
                 $res = $results['hits']['hits'];
-                $rank=1;
+                $ctr=1;
 
                     foreach($res as $r)
                     {
-                        if($rank <= $number)
+                        if($ctr <= $number)
                         {
-                            $output[$rank]['title'] = $results['hits']['hits'][$rank-1]['_source']['title'];
-                            $output[$rank]['abstract'] = $results['hits']['hits'][$rank-1]['_source']['abstract'];
-                            $output[$rank]['university'] = $results['hits']['hits'][$rank-1]['_source']['university'];
-                            $output[$rank]['author'] = $results['hits']['hits'][$rank-1]['_source']['author'];
-                            $output[$rank]['degree'] = $results['hits']['hits'][$rank-1]['_source']['degree'];
-                            $output[$rank]['program'] = $results['hits']['hits'][$rank-1]['_source']['program'];
+                            $output[$ctr]['title'] = $results['hits']['hits'][$ctr-1]['_source']['title'];
+                            $output[$ctr]['abstract'] = $results['hits']['hits'][$ctr-1]['_source']['abstract'];
+                            $output[$ctr]['university'] = $results['hits']['hits'][$ctr-1]['_source']['university'];
+                            $output[$ctr]['author'] = $results['hits']['hits'][$ctr-1]['_source']['author'];
+                            $output[$ctr]['degree'] = $results['hits']['hits'][$ctr-1]['_source']['degree'];
+                            $output[$ctr]['program'] = $results['hits']['hits'][$ctr-1]['_source']['program'];
         
-                            $rank+=1;
+                            $ctr+=1;
                         }
                     } 
                     $final_output = json_encode($output);
