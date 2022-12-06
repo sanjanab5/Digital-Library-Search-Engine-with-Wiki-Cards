@@ -20,14 +20,6 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
         $results = $client->search($params);
         $count = $results['hits']['total']['value'];
         $response = $results['hits']['hits'];
-
-        // function highlightWords($text,$word,$u) {
-        //     $text = preg_replace('#'. preg_quote($word) .'#i','<div class="sample"> <span style="background-color: #F9F902;">\\0</span> 
-        //     <span class="tooltipt"><a href='.$u.'>'.$u.'</a></span>
-        //     </div> ', $text);
-            
-        //     return $text;
-        // }
         
         function highlightWords($text,$word,$u) {
             $highlighted = preg_filter('/' . preg_quote($word, '/') . '/i', '<div class="sample"><span style="background-color: #F9F902;">\\0</span> 
@@ -199,12 +191,6 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
             for( $i = 0; $i < $count; $i++)
             {
                 $abstract= highlightWords($abstract,$terms_array[$i],$url_array[$i]);
-                
-                //$print = getSignificantSentence($url_array[$i]);
-                // echo gettype($print);
-                // echo $print;
-                // echo $url_array[$i];
-                //echo "<br>";    
             }
         }
         

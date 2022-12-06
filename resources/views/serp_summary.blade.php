@@ -24,9 +24,10 @@ require '/Users/sanjanabolla/example-app/vendor/autoload.php';
         $response = $results['hits']['hits'];
 
         function highlightWords($text,$word,$u) {
+
             $highlighted = preg_filter('/' . preg_quote($word, '/') . '/i', '<div class="sample"><span style="background-color: #F9F902;">\\0</span> 
             <span class="tooltipt"><a href='.$u.'>'.$u.'</a></span>
-            </div> ', $text);
+            </div>' , $text);
             if (!empty($highlighted)) {
                 $text = $highlighted;
             }
